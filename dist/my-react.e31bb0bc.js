@@ -196,8 +196,13 @@ function _render(vnode) {
     // 1. 创建组件
     var comp = createComponent(vnode.tag, vnode.attrs); // 2. 设置组件属性
 
-    setComponentProps(comp, vnode.attrs); // 3. 组件渲染的节点对象返回
-    // return comp.base;
+    comp.props = vnode.attrs; // 3. 渲染组件
+
+    var renderer = comp.render(); // 返回 JSX 对象
+
+    comp.base = _render(renderer); // 4. 组件渲染的节点对象返回
+
+    return comp.base;
   } // 虚拟 DOM 对象
 
 
@@ -273,7 +278,11 @@ function createComponent(comp, props) {
   } else {
     // 函数组件转换成类组件
     inst = new _component.default(props);
-    inst.constructor = comp;
+    inst.constructor = comp; // 定义 render 函数
+
+    inst.render = function () {
+      return this.constructor(props);
+    };
   }
 
   return inst;
@@ -288,26 +297,40 @@ var _react = _interopRequireDefault(require("./react"));
 
 var _reactDom = _interopRequireDefault(require("./react-dom"));
 
+var _component = _interopRequireDefault(require("./react/component"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ele = _react.default.createElement("div", {
-  className: "hhhh",
-  onClick: "handler"
-}, "zhess", _react.default.createElement("p", null, "hhhoioj")); // class Home {
+// const ele = (
+//   <div className="hhhh" onClick="handler">
+//     zhess
+//     <p>hhhoioj</p>
+//   </div>
+// )
+// class Home extends Component {
 //   constructor (props) {
-//     alert(props)
+//     super(props)
 //   }
 //   render () {
+//     return (
+//       <div className="home">
+//         <p>哈哈哈哈</p>
+//       </div>
+//     )
 //   }
 // }
-
-
 function Home() {
-  return _react.default.createElement("div", null);
+  return _react.default.createElement("div", {
+    className: "home"
+  }, _react.default.createElement("p", null, "\u54C8\u54C8\u54C8\u54C8"));
 }
 
-_reactDom.default.render(_react.default.createElement(Home, null), document.getElementById('root'));
-},{"./react":"react/index.js","./react-dom":"react-dom/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+console.log(Home());
+
+_reactDom.default.render(_react.default.createElement(Home, {
+  name: "hello"
+}), document.getElementById('root')); // ReactDOM.render(ele, document.getElementById('root'))
+},{"./react":"react/index.js","./react-dom":"react-dom/index.js","./react/component":"react/component.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -335,7 +358,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59302" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52197" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

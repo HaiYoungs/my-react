@@ -18,12 +18,16 @@ function _render(vnode) {
 
   // tag 为函数则创建组件
   if (typeof vnode.tag === 'function') {
+
     // 1. 创建组件
     const comp = createComponent(vnode.tag, vnode.attrs);
     // 2. 设置组件属性
-    setComponentProps(comp, vnode.attrs);
-    // 3. 组件渲染的节点对象返回
-    // return comp.base;
+    comp.props = vnode.attrs;
+    // 3. 渲染组件
+    const renderer = comp.render(); // 返回 JSX 对象
+    comp.base = _render(renderer);
+    // 4. 组件渲染的节点对象返回
+    return comp.base;
   }
 
   // 虚拟 DOM 对象
@@ -98,6 +102,10 @@ function createComponent(comp, props) {
   } else { // 函数组件转换成类组件
     inst = new Component(props);
     inst.constructor = comp;
+      // 定义 render 函数
+    inst.render = function () {
+      return this.constructor(props)
+    }
   }
 
   return inst;
