@@ -5,7 +5,7 @@ function render (vnode, container) {
     return container.appendChild(_render(vnode));
 }
 
-// 返回创建的 DOM 节点
+// 根据虚拟 DOM 创建真实的 DOM 节点
 function _render (vnode) {
     if (vnode === undefined) return;
 

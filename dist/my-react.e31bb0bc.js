@@ -135,7 +135,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 // 挂载创建的节点到根节点上
 function render(vnode, container) {
   return container.appendChild(_render(vnode));
-} // 返回创建的 DOM 节点
+} // 根据虚拟 DOM 创建真实的 DOM 节点
 
 
 function _render(vnode) {
@@ -461,7 +461,6 @@ var Home = /*#__PURE__*/function (_React$Component) {
   return Home;
 }(_react.default.Component); // function Home () {
 //   const handlerClick = () => {
-//     console.log('1')
 //   }
 //   return (
 //     <div className="home">

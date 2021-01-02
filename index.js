@@ -57,7 +57,6 @@ class Home extends React.Component {
 
 // function Home () {
 //   const handlerClick = () => {
-//     console.log('1')
 //   }
 
 //   return (
